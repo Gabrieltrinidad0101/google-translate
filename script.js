@@ -11,9 +11,6 @@ const reads = document.querySelectorAll(".read")
 let language1 = "en-GB"
 let language2 =  "es-ES"
 
-const speechSynthesis = window.speechSynthesis
-var voices = speechSynthesis.getVoices()
-
 
 for (const i in countries){
   const key = Object.keys(countries[i]).toString()
@@ -51,14 +48,11 @@ reads.forEach((read,index)=>{
     speechSynthesis.speak(new SpeechSynthesisUtterance(textToRead))
   })
 })
-
 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
 var recognition = new SpeechRecognition();
 
-let isStop = false
-
 recognition.onresult = function(event) {
-  console.log(event)
+  fromText.value = event.results[0][0].transcript
 }
 
 recognition.onerror = function(event) {
@@ -67,13 +61,6 @@ recognition.onerror = function(event) {
 
 
 listen.addEventListener("click",_=>{
-  if(isStop){
-    recognition.abort();
-    isStop = true
-  }else{
-    console.log("ok")
     recognition.start()
-  }
-  
 })
           
